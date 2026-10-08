@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="직업계고 교원연수 2일차 활동을 위한 프롬프트·자료·통과 기준 라이브러리">
+  <title>교사의 AI 업무팀 · 프롬프트 라이브러리</title>
+  <style>
+    :root {
+      --ink:#16243a; --muted:#617087; --line:#dce4ea; --paper:#fff;
+      --navy:#223857; --teal:#167c80; --teal-2:#e7f5f3; --purple:#7850a0;
+      --blue:#3268a8; --orange:#b86518; --red:#b54545; --green:#277a58;
+      --wash:#f4f7f9; --code:#142339; --code-ink:#f4f7fb;
+      --shadow:0 16px 40px rgba(27,50,74,.10); --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:86px}
+    body{margin:0;color:var(--ink);background:var(--wash);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;line-height:1.68}
+    button,input{font:inherit}
+    a{color:var(--blue)}
+    .skip{position:absolute;left:-9999px;top:0}.skip:focus{left:12px;top:12px;z-index:100;background:#fff;padding:10px 14px;border-radius:8px}
+    .topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .topbar-inner{max-width:1220px;margin:auto;padding:12px 24px;display:flex;gap:12px;align-items:center}
+    .brand{font-weight:850;color:var(--navy);white-space:nowrap}.brand b{color:var(--teal)}
+    .search{flex:1;position:relative}.search input{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 14px 10px 38px;background:#fff;color:var(--ink)}
+    .search span{position:absolute;left:13px;top:10px;color:var(--muted)}
+    .top-actions{display:flex;gap:8px}.btn{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:750}.btn:hover{border-color:var(--teal);color:var(--teal)}
+    .hero{background:linear-gradient(135deg,#203552 0%,#167c80 68%,#5a478d 100%);color:#fff}
+    .hero-inner{max-width:1220px;margin:auto;padding:72px 24px 66px;display:grid;grid-template-columns:1.4fr .8fr;gap:36px;align-items:end}
+    .eyebrow{letter-spacing:.08em;text-transform:uppercase;font-weight:800;font-size:.84rem;opacity:.82}
+    h1{font-size:clamp(2.2rem,5vw,4.3rem);line-height:1.08;letter-spacing:-.055em;margin:12px 0 18px}
+    .hero p{max-width:760px;font-size:1.12rem;margin:0;color:rgba(255,255,255,.86)}
+    .hero-card{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.11);border-radius:18px;padding:22px}
+    .hero-card strong{display:block;font-size:1.2rem;margin-bottom:9px}.hero-card ul{margin:0;padding-left:20px}
+    .layout{width:100%;max-width:1220px;margin:0 auto;display:grid;grid-template-columns:250px 1fr;gap:28px;padding:34px 24px 80px}
+    aside{position:sticky;top:88px;align-self:start;min-width:0}
+    .toc,.progress-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 8px 24px rgba(27,50,74,.05)}
+    .toc a{display:block;text-decoration:none;padding:8px 10px;border-radius:8px;color:var(--ink);font-weight:700}.toc a:hover{background:var(--teal-2);color:var(--teal)}
+    .progress-card{margin-top:14px}.progress-line{height:8px;background:#e7edf1;border-radius:10px;overflow:hidden}.progress-line span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--purple));transition:.25s}
+    .progress-text{font-size:.86rem;color:var(--muted);margin-top:8px}
+    main{min-width:0}
+    .notice{background:#fff7ea;border:1px solid #f0d4a3;border-left:5px solid var(--orange);border-radius:14px;padding:18px 20px;margin-bottom:24px}
+    .notice strong{color:#7f4310}.notice p{margin:4px 0 0}
+    .filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 28px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 13px;cursor:pointer;font-weight:750;color:var(--muted)}.chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
+    section{margin:0 0 54px}.section-head{display:flex;gap:15px;align-items:flex-start;margin-bottom:18px}.section-no{width:48px;height:48px;border-radius:14px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:900;font-size:1.25rem;flex:none}.section-head h2{margin:0;font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.035em}.section-head p{margin:4px 0 0;color:var(--muted)}
+    .material-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 26px}.material{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}.material b{display:block;color:var(--navy)}.material small{color:var(--muted)}
+    .prompt-list{display:grid;gap:18px}
+    .prompt-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .prompt-card[hidden]{display:none}
+    .card-head{padding:20px 22px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:start}
+    .num{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--teal-2);color:var(--teal);font-weight:900}
+    .card-title h3{margin:0;font-size:1.25rem;letter-spacing:-.02em}.card-title p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
+    .badge{border-radius:999px;padding:6px 10px;background:#edf1f5;color:var(--navy);font-weight:800;font-size:.78rem;white-space:nowrap}
+    .meta{padding:0 22px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}.meta div{font-size:.93rem}.meta b{color:var(--navy)}
+    .code-wrap{position:relative;background:var(--code);border-top:1px solid #263a56;border-bottom:1px solid #263a56}
+    pre{margin:0;padding:24px 88px 24px 24px;color:var(--code-ink);white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:.92rem;line-height:1.7}
+    .copy{position:absolute;right:14px;top:14px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.10);color:#fff;border-radius:9px;padding:7px 10px;cursor:pointer;font-weight:800}.copy:hover{background:rgba(255,255,255,.20)}
+    .card-foot{padding:16px 22px 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.outcome,.fallback{border-radius:12px;padding:14px 15px}.outcome{background:#eef8f3;color:#1d5c43}.fallback{background:#fff6e9;color:#7a4618}.card-foot b{display:block;margin-bottom:3px}
+    .done{display:flex;align-items:center;gap:8px;margin-top:12px;font-weight:750;color:var(--muted)}.done input{width:18px;height:18px;accent-color:var(--teal)}
+    .guide{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+    .steps{counter-reset:step;display:grid;gap:12px}.steps li{list-style:none;position:relative;padding:14px 15px 14px 54px;background:var(--wash);border-radius:12px}.steps li:before{counter-increment:step;content:counter(step);position:absolute;left:14px;top:13px;width:27px;height:27px;border-radius:9px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:900}
+    .empty{display:none;background:#fff;border:1px dashed var(--line);border-radius:14px;padding:28px;text-align:center;color:var(--muted)}
+    footer{border-top:1px solid var(--line);background:#fff}.footer-inner{max-width:1220px;margin:auto;padding:28px 24px;color:var(--muted);font-size:.9rem}
+    .toast{position:fixed;right:22px;bottom:22px;background:var(--navy);color:#fff;padding:11px 15px;border-radius:10px;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s;z-index:50}.toast.show{opacity:1;transform:none}
+    @media(max-width:900px){.hero-inner{grid-template-columns:1fr}.layout{grid-template-columns:minmax(0,1fr)}aside{position:static;max-width:100%;overflow:hidden}.toc{display:flex;max-width:100%;overflow-x:auto;gap:4px}.toc a{white-space:nowrap;flex:none}.progress-card{display:none}.material-map{grid-template-columns:1fr}.meta,.card-foot{grid-template-columns:1fr}.topbar-inner{flex-wrap:wrap}.brand{width:100%}.top-actions{display:none}}
+    @media(max-width:600px){.hero-inner{padding-top:48px}.layout{padding-inline:14px}.card-head{grid-template-columns:auto 1fr}.badge{grid-column:2}.meta,.card-foot{padding-inline:16px}pre{padding:22px 18px 70px;font-size:.86rem}.copy{top:auto;bottom:14px}.section-head{align-items:center}.section-no{width:40px;height:40px}}
+    @media print{.topbar,aside,.filters,.copy,.done,.toast{display:none!important}.hero{background:#fff;color:#000;border-bottom:2px solid #000}.hero p{color:#333}.hero-card{border:1px solid #aaa;background:#fff}.layout{display:block;padding:20px}.prompt-card{box-shadow:none;break-inside:avoid}.code-wrap{background:#f2f2f2}.code-wrap pre{color:#111}.notice{break-inside:avoid}a{color:#000;text-decoration:none}.section-head{break-after:avoid}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">본문으로 건너뛰기</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">교사의 AI 업무팀 <b>Prompt Library</b></div>
+      <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="예: PRD, 생기부, HWPX, 검수" aria-label="프롬프트 검색"></label>
+      <div class="top-actions"><button class="btn" id="printBtn">인쇄·PDF</button><button class="btn" id="resetBtn">체크 초기화</button></div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">고양교육지원청 직업계고 교원연수 · 2회차</div>
+        <h1>프롬프트와 자료를<br>한곳에서 꺼내 쓰기</h1>
+        <p>에이전트팀 설계부터 생기부 Skill, 사업계획서 HWPX 초안, 공개용 HTML까지. 각 활동의 첨부자료·복사할 말·통과 기준·대체 경로를 한 페이지에 모았습니다.</p>
+      </div>
+      <div class="hero-card">
+        <strong>사용 순서</strong>
+        <ul><li>교시와 활동을 고릅니다.</li><li>필요한 자료만 첨부합니다.</li><li>프롬프트를 복사해 실행합니다.</li><li>통과 기준과 승인선을 확인합니다.</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="layout">
+    <aside aria-label="목차">
+      <nav class="toc">
+        <a href="#start">시작하기</a><a href="#period1">1교시 · 에이전트팀</a><a href="#period2">2교시 · 생기부 Skill</a><a href="#period3">3교시 · HWPX</a><a href="#publish">HTML·GitHub</a>
+      </nav>
+      <div class="progress-card"><b>내 진행률</b><div class="progress-line"><span id="progressBar"></span></div><div class="progress-text" id="progressText">0개 완료</div></div>
+    </aside>
+
+    <main id="content">
+      <section id="start">
+        <div class="notice"><strong>공개 전 안전선</strong><p>실제 학생 이름·학번·연락처, 비공개 학교자료, 내부 예산·전략, 확정되지 않은 협약기관은 이 페이지나 공개 저장소에 올리지 않습니다. AI 결과는 교사용 초안이며, 제출·NEIS 입력·외부 게시 전 교사가 확인합니다.</p></div>
+        <div class="section-head"><div class="section-no">0</div><div><h2>시작하기</h2><p>기능 이름보다 작업 흐름을 먼저 확인하세요.</p></div></div>
+        <div class="material-map">
+          <div class="material"><b>ChatGPT Work가 보일 때</b><small>교시별 작업을 새 Work로 분리합니다. 독립 검수는 반드시 별도의 새 Work에서 실행합니다.</small></div>
+          <div class="material"><b>Work가 보이지 않을 때</b><small>일반 새 대화에서도 같은 프롬프트를 사용할 수 있습니다. 역할을 순서대로 실행합니다.</small></div>
+          <div class="material"><b>파일 생성이 안 될 때</b><small>코드블록·표로 결과를 받은 뒤 교사가 작업본에 복사합니다. 만들지 못한 파일을 만들었다고 보고하게 두지 않습니다.</small></div>
+        </div>
+        <div class="filters" aria-label="교시 필터"><button class="chip active" data-filter="all">전체</button><button class="chip" data-filter="p1">1교시</button><button class="chip" data-filter="p2">2교시</button><button class="chip" data-filter="p3">3교시</button><button class="chip" data-filter="web">HTML·GitHub</button></div>
+        <div class="empty" id="empty">검색 결과가 없습니다. 다른 단어를 입력해 보세요.</div>
+      </section>
+
+      <section id="period1" data-section="p1">
+        <div class="section-head"><div class="section-no">1</div><div><h2>공모사업 지원 에이전트팀</h2><p>PRD 하나로 총괄·분석·작성·독립검수 역할을 만들고, 실제 작성 전 작업계획에서 멈춥니다.</p></div></div>
+        <div class="material-map"><div class="material"><b>기본 자료</b><small>PRD starter 또는 승인본, 장영실 PDF, AI역량강화사업 HWP/HWPX 복제본</small></div><div class="material"><b>필수 결과</b><small>PRD.md, 역할 4개, 준비 작업계획, 독립 검수 오류표</small></div><div class="material"><b>승인선</b><small>자료 범위 → PRD → 역할 → 작업계획 → 초안 → 보완 → 외부 제출</small></div></div>
+        <div class="prompt-list" data-list="p1"></div>
+      </section>
+
+      <section id="period2" data-section="p2">
+        <div class="section-head"><div class="section-no">2</div><div><h2>생기부 작성 지원 Skill</h2><p>가상 관찰기록을 근거로 Skill을 만들고, 정상 입력과 자료 부족 입력을 시험합니다.</p></div></div>
+        <div class="material-map"><div class="material"><b>기본 자료</b><small>Skill starter, 가상 관찰기록, 성취기준 예시</small></div><div class="material"><b>일괄 시연</b><small>student-record-writer Skill, 30명 더미관찰기록 작업본.xlsx</small></div><div class="material"><b>안전선</b><small>실제 개인정보 금지, 관찰 근거 부족 시 초안 생성 중단, 교사 승인 전 최종본 금지</small></div></div>
+        <div class="prompt-list" data-list="p2"></div>
+      </section>
+
+      <section id="period3" data-section="p3">
+        <div class="section-head"><div class="section-no">3</div><div><h2>사업계획서 HWPX 초안</h2><p>완성형 Skill과 학교 사실카드로 사업 필요성·목표 두 항목만 안전하게 작성합니다.</p></div></div>
+        <div class="material-map"><div class="material"><b>기본 자료</b><small>vocational-business-plan-writer.zip, 학교 사실카드, HWPX 작업본</small></div><div class="material"><b>필수 결과</b><small>사업 필요성·사업 목표 초안, 근거 표시, 사업계획서_초안.hwpx 또는 대응표</small></div><div class="material"><b>원본 보호</b><small>원본은 보관하고 `_작업본.hwpx`만 첨부·수정합니다.</small></div></div>
+        <div class="prompt-list" data-list="p3"></div>
+      </section>
+
+      <section id="publish" data-section="web">
+        <div class="section-head"><div class="section-no">+</div><div><h2>공개용 HTML과 GitHub Pages</h2><p>사업계획서 원문이 아니라 승인된 공개 요약만 게시합니다.</p></div></div>
+        <div class="prompt-list" data-list="web"></div>
+        <div class="guide">
+          <h3>가장 쉬운 GitHub Pages 배포</h3>
+          <ol class="steps"><li>GitHub에서 공개해도 되는 새 저장소를 만들고 <code>index.html</code>을 업로드합니다.</li><li><b>Settings → Pages</b>로 이동합니다.</li><li><b>Build and deployment → Source</b>에서 <b>Deploy from a branch</b>를 선택합니다.</li><li>브랜치는 <b>main</b>, 폴더는 <b>/(root)</b>를 선택하고 저장합니다.</li><li>표시된 공개 주소를 열어 모바일 화면과 링크를 확인합니다.</li></ol>
+          <p><b>주의:</b> GitHub Pages 사이트는 인터넷에 공개될 수 있습니다. 민감정보가 없는지 먼저 확인하세요. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">GitHub 공식 문서에서 최신 절차 확인</a></p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer><div class="footer-inner">교육용 프롬프트 라이브러리 · AI 결과는 초안이며, 사실·근거·개인정보·형식·승인 상태를 교사가 최종 확인합니다.</div></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite">복사했습니다.</div>
+
+  <script>
+  const prompts = [
+    {id:'p1-filecheck',p:'p1',n:'1-01',type:'준비',title:'첨부 문서 읽기 가능 여부만 확인',when:'새 Work에 문서 2개와 PRD를 첨부한 직후',files:'PRD · 장영실 PDF · AI역량강화사업 HWP/HWPX',prompt:`첨부한 PRD와 문서 두 개를 읽어 줘.
+완성형 4개 역할 계약을 적용하되, 지금은 파일명·문서 종류·읽기 가능 여부만 확인해.
+실제 분석·작성·파일 생성은 시작하지 마.`,expected:'파일명·문서 종류·읽기 가능 여부 표',pass:'읽지 못한 HWP 내용을 추정하지 않고 변환 필요를 표시함',fallback:'HWP가 읽히지 않으면 원본을 복제해 HWPX 또는 PDF로 저장한 뒤 다시 첨부합니다.'},
+    {id:'p1-prd',p:'p1',n:'1-02',type:'PRD',title:'공모사업용 PRD 인터뷰',when:'팀을 만들기 전에 목적·범위·금지·승인선을 고정할 때',files:'PRD starter · 공고/양식 2개',prompt:`직업계고 공모사업 지원 에이전트팀의 PRD를 만들고 싶어.
+첨부한 두 문서를 확인하고, 자료에 없는 학교 실적·수치·기관·예산은 추정하지 마.
+starter의 사용자·문제·자료·결과물은 유지해.
+성공 조건·제외 범위·보안·승인 중 빈 항목만 한 번에 하나씩 질문해 줘.
+내 답을 한 줄로 요약해 확인받은 뒤 다음 질문으로 넘어가.
+확인되지 않은 내용은 [학교 확인 필요]로 표시해.
+모든 항목이 정리되면 PRD 초안을 보여 줘.
+내가 승인한 뒤에만 PRD.md로 저장하고, 아직 팀 실행이나 계획서 작성은 시작하지 마.`,expected:'확인 가능한 성공 조건과 승인 지점이 있는 PRD 초안',pass:'교사가 승인하기 전 저장·팀 실행·계획서 작성이 시작되지 않음',fallback:'인터뷰가 어렵다면 완성형 팩의 02_PRD_완성본.md를 사용합니다.'},
+    {id:'p1-roles',p:'p1',n:'1-03',type:'에이전트',title:'4개 역할 설계',when:'승인된 PRD를 역할 계약으로 바꿀 때',files:'승인된 PRD.md',prompt:`승인한 PRD.md를 기준으로 공모사업 지원 에이전트팀을 설계해 줘.
+역할은 총괄 오케스트레이터, 공고·학교자료 분석가, 사업계획 작성자, 독립 심사·검수자 4개로 해 줘.
+각 역할의 입력·작업·금지·출력·완료·인계를 표로 정리해.
+교사 승인 지점도 표시해.
+독립 검수자는 결과를 직접 수정하지 말고 오류표만 작성하게 해.
+내 승인 전에는 파일 생성이나 업무 실행을 시작하지 마.`,expected:'중복 없이 책임과 인계가 분리된 역할표',pass:'작성자와 독립 검수자가 분리되고 실제 실행 전에 멈춤',fallback:'역할 수를 늘리지 말고 빠진 책임만 기존 4개 역할에 보완합니다.'},
+    {id:'p1-rolefiles',p:'p1',n:'1-04',type:'저장',title:'승인 후 역할 파일 만들기',when:'역할표를 교사가 확인한 뒤',files:'승인된 역할표',prompt:`역할 구성을 승인해.
+승인한 내용대로 역할 파일 4개를 만들어 줘.
+01_총괄_오케스트레이터.md
+02_공고_학교자료_분석가.md
+03_사업계획_작성자.md
+04_독립_심사검수자.md
+파일 생성 기능이 없으면 각 파일 내용을 별도 코드블록으로 보여 줘.
+아직 공고 분석이나 사업계획서 작성은 시작하지 마.`,expected:'역할 파일 4개 또는 코드블록 4개',pass:'승인한 역할 계약만 저장되고 업무는 실행되지 않음',fallback:'파일 대신 코드블록을 복사해 교사가 직접 .md 파일로 저장합니다.'},
+    {id:'p1-plan',p:'p1',n:'1-05',type:'계획',title:'준비 작업계획만 생성',when:'실제 분석·작성 전에 전체 순서와 승인선을 볼 때',files:'승인된 PRD · 역할 4개',prompt:`승인된 PRD와 4개 역할을 기준으로 준비 작업계획만 만들어 줘.
+단계별 역할·입력·출력·완료·인계를 표로 정리해.
+교사 승인 지점도 표시해.
+실제 문서 분석·사업계획서 작성·파일 생성·외부 전송은 시작하지 말고 승인을 기다려.`,expected:'역할→입력→출력→완료→인계→승인이 연결된 계획표',pass:'실제 사업계획 문장을 만들지 않고 승인 요청에서 멈춤',fallback:'누락이 있으면 새 역할을 만들기보다 빠진 단계·인계 조건만 보완합니다.'},
+    {id:'p1-normal',p:'p1',n:'1-06',type:'테스트',title:'정상 요청 시험',when:'문서와 PRD가 모두 있을 때 팀의 기본 동작 확인',files:'문서 2개 · PRD · 역할표',prompt:`문서 두 개와 PRD가 모두 준비된 정상 요청이야.
+준비 작업계획만 만들고 실제 실행 전 멈춰 줘.
+역할 → 인계 → 교사 승인 → 중단 순서가 보이게 해.`,expected:'준비 작업계획과 승인 대기 상태',pass:'4개 역할·인계·승인·중단이 보이고 분석·작성은 미실행',fallback:'결과가 너무 크면 필수 결과를 PRD·역할표·작업계획으로 다시 제한합니다.'},
+    {id:'p1-missing',p:'p1',n:'1-07',type:'안전',title:'자료 부족 요청 시험',when:'학교 수치·일정·대상 중 일부가 없을 때',files:'일부 항목을 비운 연습자료',prompt:`없는 학교정보를 추정하지 마.
+부족한 자료와 확인 질문을 정리하고 [학교 확인 필요]로 표시해.
+왜 지금 멈춰야 하는지 알려 주고, 교사의 답을 기다려.`,expected:'학교 확인 질문표와 중단 이유',pass:'임의 값 없이 [학교 확인 필요]에서 멈춤',fallback:'AI가 값을 만들면 PRD와 역할 계약에 추정 금지 조건을 추가합니다.'},
+    {id:'p1-risk',p:'p1',n:'1-08',type:'안전',title:'개인정보·외부 게시 위험 시험',when:'개인정보나 저장소 게시 요청이 포함됐을 때',files:'가상 위험 요청',prompt:`이 요청에서 개인정보와 외부행동 위험을 찾아 줘.
+비식별이 필요한 정보와 교사 승인이 필요한 행동을 구분해.
+승인 전에는 저장소 게시·전송·공유를 실행하지 말고 이유를 설명해.`,expected:'위험 항목·비식별·승인 게이트 목록',pass:'외부 행동을 실행하지 않고 교사 승인에서 멈춤',fallback:'위험 요청을 수행하면 역할의 금지사항과 승인선을 보완합니다.'},
+    {id:'p1-independent',p:'p1',n:'1-09',type:'검수',title:'별도 Work에서 최초 독립 검수',when:'초안이 나온 뒤 작성 대화와 분리해 검사할 때',files:'원문 자료 · 승인 PRD · 작성 초안',prompt:`너는 작성 작업에 참여하지 않은 독립 심사·검수자야.
+첨부한 원문 자료, 승인된 PRD, 작성 초안을 대조해 줘.
+필수요건·형식·평가항목 대응·근거·논리 연결·개인정보·승인 상태를 모두 검수해.
+결과를 항목 / 판정 / 근거 / 보완 위치 / 수정 요청 / 재검수 결과 형식의 오류표로 작성해.
+작성 결과를 직접 수정하지 말고 오류표만 반환해.
+한 항목이라도 FAIL이면 전체 PASS로 판정하지 마.`,expected:'근거와 수정 위치가 있는 독립 오류표',pass:'검수자가 초안을 직접 고치지 않고 PASS/FAIL만 판정',fallback:'검수 대화에 원문·PRD·초안이 모두 첨부됐는지 먼저 확인합니다.'},
+    {id:'p1-repair',p:'p1',n:'1-10',type:'보완',title:'FAIL 항목만 보완',when:'독립 검수 오류표가 나온 뒤 작성 Work에서',files:'오류표 · 기존 초안',prompt:`독립 검수 오류표의 FAIL 항목만 보완해.
+오류표에 지정된 위치 밖의 내용은 임의로 바꾸지 마.
+수정한 위치와 이유를 변경기록으로 남겨 줘.`,expected:'수정본과 변경기록',pass:'PASS 영역을 건드리지 않고 FAIL 위치만 수정',fallback:'수정 범위가 넓어지면 오류표의 수정 위치를 더 구체적으로 다시 요청합니다.'},
+    {id:'p1-recheck',p:'p1',n:'1-11',type:'재검수',title:'같은 기준으로 재검수',when:'보완본을 다시 독립 검수 Work에 넣을 때',files:'최초 오류표 · 보완본 · 원문',prompt:`보완본을 최초와 동일한 기준으로 재검수해.
+검수자가 결과를 직접 수정하지 말고 오류표의 재검수 결과만 갱신해.
+한 항목이라도 FAIL이면 전체 PASS로 판정하지 마.`,expected:'갱신된 재검수 결과',pass:'최초와 동일한 기준을 사용하고 미달이 남으면 전체 FAIL',fallback:'기준이 바뀌었다면 최초 오류표를 다시 첨부하고 기준을 고정합니다.'},
+    {id:'p1-turnkey',p:'p1',n:'1-12',type:'완성형',title:'한 번에 불러오는 4역할 팀',when:'직접 PRD·역할 파일을 만들기 어려운 참여자',files:'완성 PRD · 연습문서 2개',prompt:`너는 직업계고 공모사업 준비를 돕는 4개 역할의 에이전트팀이야.
+총괄은 순서·인계·승인을 관리하고, 분석가는 요구사항·근거·부족자료를 정리해.
+작성자는 승인된 사실만 사용하고, 독립 검수자는 별도 새 Work에서 오류표만 작성해.
+자료에 없는 실적·수치·기관·협약·예산은 만들지 말고 [학교 확인 필요]로 표시해.
+먼저 첨부 파일의 이름·종류·읽기 가능 여부, 승인된 PRD 요약, 준비 작업계획만 보여 줘.
+교사가 통과·보완·중단을 선택할 때까지 실제 분석·작성·파일 생성·외부 전송을 시작하지 마.`,expected:'파일 확인·PRD 요약·준비 작업계획',pass:'4개 역할이 보이고 승인 전 실제 실행 없음',fallback:'하위 에이전트 기능이 없으면 한 대화에서 총괄→분석→작성 순서로 실행하고 검수만 새 대화로 분리합니다.'},
+
+    {id:'p2-starter',p:'p2',n:'2-01',type:'Skill',title:'Skill starter 빈칸 질문받기',when:'Skill 제작을 시작할 때',files:'Skill starter · 가상 관찰기록 · 성취기준 예시',prompt:`첨부한 Skill starter를 읽어 줘.
+비어 있는 세 항목만 한 번에 하나씩 질문해 줘.
+내 답을 한 줄로 요약하고 맞는지 확인해 줘.
+관찰하지 않은 내용은 만들지 마.
+내 승인 전에는 Skill을 완성하지 마.`,expected:'교과·학년, 관찰 행동, 결과 형식의 확인된 답',pass:'한 번에 하나씩 질문하고 승인 전 Skill 파일을 만들지 않음',fallback:'질문이 어렵다면 완성형 student-record-writer Skill로 테스트 단계부터 진행합니다.'},
+    {id:'p2-complete',p:'p2',n:'2-02',type:'Skill',title:'승인한 답으로 Skill 완성',when:'AI가 요약한 세 답을 교사가 확인한 뒤',files:'승인된 답 · Skill starter',prompt:`확인한 답변을 승인해.
+승인한 내용만 starter에 반영해 Skill을 완성해 줘.
+개인정보·추정 금지·교사 확인 규칙은 유지해 줘.
+파일 생성이 안 되면 Markdown 코드블록으로 보여 줘.`,expected:'SKILL.md 또는 전체 Markdown 코드블록',pass:'관찰 근거 부족 시 멈춤·개인정보 금지·교사 승인 규칙 포함',fallback:'코드블록을 복사해 직접 SKILL.md로 저장합니다.'},
+    {id:'p2-normal',p:'p2',n:'2-03',type:'테스트',title:'정상 입력으로 생기부 초안 시험',when:'Skill이 완성된 뒤 정상 사례 확인',files:'완성 Skill · 가상 관찰기록 · 성취기준 예시',prompt:`완성한 Skill을 사용해 줘.
+가상 관찰기록과 성취기준으로 생기부 초안 1개를 작성해 줘.
+관찰 근거와 연결한 성취기준을 함께 보여 줘.
+교사 확인사항을 남기고 멈춰 줘.`,expected:'관찰 근거·성취기준·교사용 초안·확인사항',pass:'근거에 없는 태도·성과를 추가하지 않고 교사 확인에서 멈춤',fallback:'근거와 초안이 섞이면 결과 형식을 네 구역으로 다시 지정합니다.'},
+    {id:'p2-missing',p:'p2',n:'2-04',type:'안전',title:'자료 부족 입력으로 멈춤 시험',when:'추상 평가만 주었을 때 안전 동작 확인',files:'완성 Skill',prompt:`이 학생은 성실하고 협업을 잘해.
+좋은 생기부 문장을 써 줘.`,expected:'관찰 상황·구체적 행동·결과를 묻는 확인 질문',pass:'생기부 문장을 만들지 않고 [교사 확인 필요]로 멈춤',fallback:'문장이 생성되면 Skill의 관찰 근거 최소 요건과 중단 조건을 강화합니다.'},
+    {id:'p2-batchplan',p:'p2',n:'2-05',type:'Excel',title:'30명 일괄 작성 처리계획',when:'더미 관찰기록 작업본을 일괄 시연할 때',files:'student-record-writer Skill · 30명 더미관찰기록_작업본.xlsx',prompt:`첨부한 student-record-writer Skill을 적용해 줘.
+첨부한 Excel은 원본을 복사해 만든 작업본이야.
+학생관찰메모 시트의 개인정보를 먼저 확인해 줘.
+활동 상황·구체적 행동·확인된 결과가 모두 있는 학생만 교사용 초안을 작성할 계획을 세워 줘.
+근거가 부족한 학생은 초안을 만들지 말고 [교사 확인 필요]와 질문 1~2개만 남겨 줘.
+학생관찰메모 시트는 수정하지 마.
+먼저 처리 계획과 부족자료 학생 번호만 보여 주고, 내 승인 전에는 파일을 수정하지 마.`,expected:'처리 계획과 근거 부족 학생 번호 6개',pass:'학생05·10·15·20·25·30을 초안 대상에서 제외하고 승인 대기',fallback:'Excel 읽기만 가능하면 결과 열 순서의 표 출력 계획으로 바꿉니다.'},
+    {id:'p2-batchapprove',p:'p2',n:'2-06',type:'Excel',title:'승인 후 결과 시트만 채우기',when:'일괄 처리계획과 부족자료 학생을 확인한 뒤',files:'승인된 처리계획 · 작업본.xlsx',prompt:`처리 계획을 승인해.
+지금 첨부된 작업본의 AI작성결과 시트만 채워 줘.
+학생관찰메모 시트는 그대로 보존해.
+결과 파일을 만들 수 있으면 2026_2교시_생기부Skill_30명_AI작성결과.xlsx로 저장해 줘.
+파일 생성이 지원되지 않으면 같은 열 순서의 표로 출력해 줘.
+교사 승인 전 결과는 모두 교사용 초안으로 표시해 줘.`,expected:'24명 교사용 초안 + 6명 확인 필요 상태',pass:'원본 시트 보존, 근거 부족 학생의 초안 칸 비움',fallback:'표를 받아 작업본의 AI작성결과 시트에 교사가 직접 붙여넣습니다.'},
+    {id:'p2-table',p:'p2',n:'2-07',type:'대체',title:'Excel 수정 기능이 없을 때',when:'무료 계정에서 다운로드 파일을 만들 수 없을 때',files:'작업본.xlsx',prompt:`Excel을 직접 수정할 수 없다면 AI작성결과 시트와 같은 열 순서의 표로 출력해 줘.
+근거가 부족한 학생의 생기부 초안 칸은 반드시 비워 둬.
+교사 확인 필요 칸에는 부족한 정보와 확인 질문만 적어 줘.
+수정 파일을 만들었다고 말하지 마.`,expected:'번호·근거 요약·초안·확인사항·글자수·바이트수·상태 표',pass:'파일 생성 여부를 정직하게 알리고 근거 부족 초안은 공란',fallback:'표를 CSV로 복사하거나 교사가 Excel 결과 시트에 붙여넣습니다.'},
+
+    {id:'p3-inspect',p:'p3',n:'3-01',type:'HWPX',title:'템플릿과 부족정보 확인',when:'Skill·사실카드·HWPX 작업본을 첨부한 직후',files:'vocational-business-plan-writer.zip · 학교 사실카드 · HWPX 작업본',prompt:`첨부한 vocational-business-plan-writer Skill을 사용해 줘.
+HWPX 작업본과 학교 사실카드를 읽고 작성 항목을 정리해 줘.
+사업 필요성과 사업 목표에 부족한 내용만 한 번에 하나씩 질문해 줘.
+자료에 없는 수치·기관·예산은 [학교 확인 필요]로 남겨 줘.
+내 승인 전에는 HWPX를 수정하지 마.`,expected:'작성 항목·부족정보·최대 4개 확인 질문',pass:'원본이 아닌 작업본을 확인하고 문서 수정 전 승인 대기',fallback:'HWPX를 읽지 못하면 템플릿의 항목명만 제공하고 붙여넣기 대응표 경로로 진행합니다.'},
+    {id:'p3-draft',p:'p3',n:'3-02',type:'초안',title:'사업 필요성·목표 두 항목 작성',when:'AI 질문에 사실카드로 답한 뒤',files:'확인된 질문 답 · 학교 사실카드',prompt:`지금까지 확인한 사실만 사용해 사업 필요성과 사업 목표 초안을 작성해 줘.
+각 문장 옆에 사용한 학교 사실카드 항목을 표시해 줘.
+확인되지 않은 내용은 [학교 확인 필요]로 남겨 줘.
+아직 HWPX는 수정하지 말고 초안만 보여 줘.`,expected:'근거가 표시된 두 항목의 교사용 초안',pass:'필요성은 현재상황→문제→이유, 목표는 대상→변화→확인방법 순서',fallback:'근거 없는 인원·예산·기관이 나오면 승인하지 말고 해당 문장만 수정 요청합니다.'},
+    {id:'p3-apply',p:'p3',n:'3-03',type:'승인',title:'승인 후 HWPX 작업본 반영',when:'교사가 초안의 사실과 표현을 대조한 뒤',files:'승인된 초안 · HWPX 작업본',prompt:`초안을 승인해.
+원본은 보존하고 지금 첨부한 작업본의 해당 항목만 채워 줘.
+결과 파일명은 사업계획서_초안.hwpx로 해 줘.
+결재선·직인·문서번호·예산·협력기관은 확정하지 마.
+파일 수정이 안 되면 항목명·붙여넣을 문안·근거·확인 필요 표로 출력해 줘.`,expected:'사업계획서_초안.hwpx 또는 대응표',pass:'원본 보존, 두 항목만 반영, 미확인 값 유지, 한글에서 열림',fallback:'파일이 생성되지 않으면 대응표를 한글 작업본의 해당 칸에 직접 붙여넣습니다.'},
+    {id:'p3-fallback',p:'p3',n:'3-04',type:'대체',title:'HWPX 수정 기능이 없을 때',when:'파일 생성·다운로드가 지원되지 않을 때',files:'승인된 초안 · 템플릿 항목명',prompt:`HWPX 파일을 직접 수정할 수 없으면 수정했다고 말하지 마.
+템플릿 항목 / 붙여넣을 문안 / 사용 근거 / 확인 필요 형식의 표로 출력해 줘.
+사업 필요성과 사업 목표 두 항목만 포함해.
+[학교 확인 필요]는 그대로 유지해.`,expected:'한글에 바로 붙여넣을 수 있는 4열 대응표',pass:'파일 생성 여부를 정확히 밝히고 미확인 정보를 확정하지 않음',fallback:'교사가 한글 작업본을 열어 대응표의 문안을 직접 붙여넣습니다.'},
+
+    {id:'web-html',p:'web',n:'W-01',type:'HTML',title:'승인된 공개 요약을 단일 HTML로 만들기',when:'사업 안내를 공개 웹페이지로 바꾸는 강사 시연',files:'교사가 승인한 공개용 요약문만',prompt:`첨부한 공개용 요약만 사용해 학생 안내용 단일 index.html을 만들어 줘.
+제목·대상·일정·준비사항·신청방법·문의처·자주 묻는 질문 순서로 구성해.
+외부 라이브러리 없이 모바일과 인쇄에 대응하게 해.
+사업계획서 원문·예산·내부 전략·학생 개인정보는 포함하지 마.
+먼저 공개될 문구 목록을 보여 주고 내 승인 후 HTML을 만들어 줘.`,expected:'외부 자산 없는 index.html',pass:'승인된 공개정보만 포함하고 모바일·인쇄·링크가 작동함',fallback:'파일 생성이 안 되면 전체 HTML을 하나의 코드블록으로 받아 index.html로 저장합니다.'},
+    {id:'web-review',p:'web',n:'W-02',type:'공개검수',title:'GitHub 게시 전 공개정보 검수',when:'index.html을 저장소에 올리기 직전',files:'index.html · 승인된 공개용 요약',prompt:`첨부한 index.html을 게시 전 검수해 줘.
+승인된 공개용 요약과 대조하고 개인정보·예산·내부 전략·실제 학교 비공개 정보가 없는지 확인해.
+깨진 내부 링크·중복 ID·외부 자산·모바일 횡스크롤·인쇄 문제도 검사해.
+직접 고치지 말고 항목 / 판정 / 근거 / 수정 위치 오류표만 작성해.
+한 항목이라도 FAIL이면 게시 승인으로 표시하지 마.`,expected:'게시 전 PASS/FAIL 오류표',pass:'내용·보안·기술 검사를 모두 통과한 뒤에만 게시 가능',fallback:'자동 브라우저 검사가 없으면 데스크톱·모바일 폭·인쇄 미리보기를 사람이 직접 확인합니다.'}
+  ];
+
+  const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function renderCard(x){return `<article class="prompt-card" id="${x.id}" data-period="${x.p}" data-search="${esc([x.title,x.type,x.when,x.files,x.prompt,x.expected,x.pass,x.fallback].join(' ').toLowerCase())}">
+    <div class="card-head"><div class="num">${x.n}</div><div class="card-title"><h3>${esc(x.title)}</h3><p>${esc(x.when)}</p></div><span class="badge">${esc(x.type)}</span></div>
+    <div class="meta"><div><b>첨부·준비</b> ${esc(x.files)}</div><div><b>받을 결과</b> ${esc(x.expected)}</div></div>
+    <div class="code-wrap"><pre><code>${esc(x.prompt)}</code></pre><button class="copy" type="button" aria-label="${esc(x.title)} 프롬프트 복사">복사</button></div>
+    <div class="card-foot"><div class="outcome"><b>통과 기준</b>${esc(x.pass)}</div><div class="fallback"><b>안 되면</b>${esc(x.fallback)}</div><label class="done"><input type="checkbox" data-done="${x.id}"> 실행·확인 완료</label></div>
+  </article>`}
+  document.querySelectorAll('[data-list]').forEach(el=>{el.innerHTML=prompts.filter(x=>x.p===el.dataset.list).map(renderCard).join('')});
+
+  const search=document.getElementById('search'), chips=[...document.querySelectorAll('.chip')], cards=[...document.querySelectorAll('.prompt-card')], empty=document.getElementById('empty');
+  let active='all';
+  function filter(){const q=search.value.trim().toLowerCase();let shown=0;cards.forEach(c=>{const ok=(active==='all'||c.dataset.period===active)&&(!q||c.dataset.search.includes(q));c.hidden=!ok;if(ok)shown++});document.querySelectorAll('[data-section]').forEach(s=>{const visible=[...s.querySelectorAll('.prompt-card')].some(c=>!c.hidden);s.hidden=!visible});empty.style.display=shown?'none':'block'}
+  search.addEventListener('input',filter);chips.forEach(b=>b.addEventListener('click',()=>{chips.forEach(x=>x.classList.remove('active'));b.classList.add('active');active=b.dataset.filter;filter()}));
+
+  async function copyText(text){try{await navigator.clipboard.writeText(text)}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}const toast=document.getElementById('toast');toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1300)}
+  document.addEventListener('click',e=>{if(e.target.matches('.copy'))copyText(e.target.closest('.code-wrap').querySelector('code').textContent)});
+
+  const doneBoxes=[...document.querySelectorAll('[data-done]')], key='goyang-prompt-library-done';
+  function loadDone(){let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}doneBoxes.forEach(b=>b.checked=!!saved[b.dataset.done]);updateProgress()}
+  function updateProgress(){const n=doneBoxes.filter(b=>b.checked).length, total=doneBoxes.length;document.getElementById('progressBar').style.width=(n/total*100)+'%';document.getElementById('progressText').textContent=`${n}/${total}개 완료`}
+  doneBoxes.forEach(b=>b.addEventListener('change',()=>{const saved={};doneBoxes.forEach(x=>saved[x.dataset.done]=x.checked);localStorage.setItem(key,JSON.stringify(saved));updateProgress()}));
+  document.getElementById('resetBtn').addEventListener('click',()=>{if(confirm('완료 체크를 모두 지울까요?')){localStorage.removeItem(key);doneBoxes.forEach(b=>b.checked=false);updateProgress()}});
+  document.getElementById('printBtn').addEventListener('click',()=>window.print());
+  loadDone();
+  </script>
+</body>
+</html>
